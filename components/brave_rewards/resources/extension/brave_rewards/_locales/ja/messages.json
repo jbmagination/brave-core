@@ -420,7 +420,7 @@
     "description": "Terms of service panel opt-in text"
   },
   "bat": {
-    "message": "BAP",
+    "message": "BAT",
     "description": "BAT text for displaying converted tip amount."
   },
   "bap": {
@@ -528,8 +528,8 @@
     "description": "Displayed in wallet that tells users that he is verified"
   },
   "walletGoToProvider":  {
-    "message": "私の$provider$アカウントに移動する",
-    "description": "CTA to open an external wallet account",
+    "message": "$provider$のアカウントに移動",
+    "description": "CTA to open uphold account",
     "placeholders": {
       "provider": {
         "content": "$1",
@@ -642,8 +642,8 @@
     "description": "Status button that tells user that he is currently pending"
   },
   "walletVerificationNote3":  {
-    "message": "注意： 承認すると、あなたのトランザクションは$provider$に表示されます。例えば、チップの受取人と金額を見ることができるようになります。",
-    "description": "Displayed in login modal for external wallet providers",
+    "message": "ご注意：承認するとトランザクションは「$provider$ 」に表示されます。 たとえば、受信者とチップの金額を確認できます。",
+    "description": "Displayed in login modal for uphold",
     "placeholders": {
       "provider": {
         "content": "$1",

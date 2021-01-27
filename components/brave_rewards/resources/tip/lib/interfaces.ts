@@ -56,7 +56,8 @@ export type OnboardingResult = 'opted-in' | 'dismissed'
 export enum PublisherStatus {
   NOT_VERIFIED = 0,
   CONNECTED = 1,
-  UPHOLD_VERIFIED = 2
+  UPHOLD_VERIFIED = 2,
+  BITFLYER_VERIFIED = 3
 }
 
 export interface PublisherInfo {
@@ -87,7 +88,13 @@ export enum ExternalWalletStatus {
 
 export interface ExternalWalletInfo {
   status: ExternalWalletStatus
-  type: 'anonymous' | 'uphold'
+  type: 'anonymous' | 'uphold' | 'bitflyer'
+  verifyUrl: string
+  addUrl: string
+  withdrawUrl: string
+  userName: string
+  accountUrl: string
+  loginUrl: string
 }
 
 export interface RewardsParameters {
