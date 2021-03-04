@@ -110,7 +110,7 @@ export class Log extends React.Component<Props, State> {
         </LogControls>
         <LogTextArea value={this.props.log} readOnly={true} onContextMenu={this.preventDefault}/>
         <Notice>
-          {getLocale('logNotice', { numberOfLines: '5,000' })}
+          {getLocale('logNotice', { numberOfLines: '20,000' })}
         </Notice>
       </>
     )
