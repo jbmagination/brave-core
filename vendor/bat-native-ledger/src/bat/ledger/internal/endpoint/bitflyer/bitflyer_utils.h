@@ -13,6 +13,8 @@ namespace ledger {
 namespace endpoint {
 namespace bitflyer {
 
+std::string GetClientId();
+
 std::string GetClientSecret();
 
 std::vector<std::string> RequestAuthorization(const std::string& token = "");

@@ -41,15 +41,13 @@ class BitflyerUtilTest : public testing::Test {
 };
 
 TEST_F(BitflyerUtilTest, GetClientId) {
-  // production
-  ledger::_environment = type::Environment::PRODUCTION;
-  std::string result = bitflyer::GetClientId();
-  ASSERT_EQ(result, kClientIdProduction);
+  const std::string result = bitflyer::GetClientId();
+  ASSERT_EQ(result, BITFLYER_CLIENT_ID);
+}
 
-  // staging
-  ledger::_environment = type::Environment::STAGING;
-  result = bitflyer::GetClientId();
-  ASSERT_EQ(result, kClientIdStaging);
+TEST_F(BitflyerUtilTest, GetClientSecret) {
+  const std::string result = bitflyer::GetClientSecret();
+  ASSERT_EQ(result, BITFLYER_CLIENT_SECRET);
 }
 
 TEST_F(BitflyerUtilTest, GetFeeAddress) {

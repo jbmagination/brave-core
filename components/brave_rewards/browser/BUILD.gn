@@ -8,6 +8,7 @@ source_set("browser") {
   public_deps = [ "buildflags" ]
 
   defines = [
+    "BITFLYER_CLIENT_ID=\"$bitflyer_client_id\"",
     "BITFLYER_CLIENT_SECRET=\"$bitflyer_client_secret\"",
     "BITFLYER_STAGING_URL=\"$bitflyer_staging_url\"",
   ]

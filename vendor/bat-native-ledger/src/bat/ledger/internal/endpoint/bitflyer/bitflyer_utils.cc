@@ -17,8 +17,12 @@ namespace bitflyer {
 const char kUrlStaging[] = BITFLYER_STAGING_URL;
 const char kUrlProduction[] = "https://bitflyer.jp";
 
+std::string GetClientId() {
+  return ::ledger::bitflyer::GetClientId();
+}
+
 std::string GetClientSecret() {
-  return BITFLYER_CLIENT_SECRET;
+  return ::ledger::bitflyer::GetClientSecret();
 }
 
 std::vector<std::string> RequestAuthorization(const std::string& token) {
@@ -29,7 +33,7 @@ std::vector<std::string> RequestAuthorization(const std::string& token) {
     return headers;
   }
 
-  const std::string id = ::ledger::bitflyer::GetClientId();
+  const std::string id = GetClientId();
   const std::string secret = GetClientSecret();
 
   std::string user;

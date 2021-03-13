@@ -19,14 +19,14 @@ namespace bitflyer {
 
 const char kUrlStaging[] = BITFLYER_STAGING_URL;
 const char kUrlProduction[] = "https://bitflyer.jp";
-const char kClientIdStaging[] = "078bf3871f3741432e813376d996a6a0";
-const char kClientIdProduction[] = "078bf3871f3741432e813376d996a6a0";
 const char kFeeAddressStaging[] = "068e675b-f137-48ed-8068-4ad34ca4f30f";
 const char kFeeAddressProduction[] = "";  // FIXME: Need official deposit_id
 const char kACAddressStaging[] = "";
 const char kACAddressProduction[] = "";  // FIXME: Need official deposit_id
 
 std::string GetClientId();
+
+std::string GetClientSecret();
 
 std::string GetUrl();
 
