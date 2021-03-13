@@ -51,20 +51,18 @@ std::string PostOauth::GeneratePayload(const std::string& external_account_id,
   dict.SetStringKey("redirect_uri", "rewards://bitflyer/authorization");
   dict.SetBoolKey("request_deposit_id", true);
 
-  // Send PKCE code verifier and challenge when running in production
-  if (ledger::_environment == ledger::type::Environment::PRODUCTION) {
-    const std::string code_verifier =
-        ledger::bitflyer::GenerateRandomString(ledger::is_testing);
-    const std::string hashed_code_verifier =
-        crypto::SHA256HashString(code_verifier);
-    std::string code_challenge;
-    base::Base64UrlEncode(hashed_code_verifier,
-                          base::Base64UrlEncodePolicy::INCLUDE_PADDING,
-                          &code_challenge);
-    dict.SetStringKey("code_verifier", code_verifier);
-    dict.SetStringKey("code_challenge_method", "S256");
-    dict.SetStringKey("code_challenge", code_challenge);
-  }
+  // Always send PKCE code verifier and challenge
+  const std::string code_verifier =
+      ledger::bitflyer::GenerateRandomString(ledger::is_testing);
+  const std::string hashed_code_verifier =
+      crypto::SHA256HashString(code_verifier);
+  std::string code_challenge;
+  base::Base64UrlEncode(hashed_code_verifier,
+                        base::Base64UrlEncodePolicy::INCLUDE_PADDING,
+                        &code_challenge);
+  dict.SetStringKey("code_verifier", code_verifier);
+  dict.SetStringKey("code_challenge_method", "S256");
+  dict.SetStringKey("code_challenge", code_challenge);
 
   std::string payload;
   base::JSONWriter::Write(dict, &payload);
