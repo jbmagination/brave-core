@@ -16,6 +16,7 @@
 #include "brave/components/brave_rewards/browser/test/common/rewards_browsertest_network_util.h"
 #include "brave/components/brave_rewards/browser/test/common/rewards_browsertest_response.h"
 #include "brave/components/brave_rewards/browser/test/common/rewards_browsertest_util.h"
+#include "brave/components/brave_rewards/common/pref_names.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -68,8 +69,7 @@ class RewardsStateBrowserTest : public InProcessBrowserTest {
     rewards_service_->SetLedgerEnvForTesting();
 
     // Bypass onboarding UX by default
-    rewards_service_->SaveOnboardingResult(
-        brave_rewards::OnboardingResult::kDismissed);
+    profile_->GetPrefs()->SetBoolean(brave_rewards::prefs::kEnabled, true);
   }
 
   void GetTestResponse(
