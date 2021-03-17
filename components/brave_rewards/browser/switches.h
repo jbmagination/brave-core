@@ -9,6 +9,7 @@ namespace brave_rewards {
 namespace switches {
 
 extern const char kRewards[];
+extern const char kPaymentServiceUrl[];
 
 }  // namespace switches
 }  // namespace brave_rewards

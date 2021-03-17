@@ -8,8 +8,19 @@ import { LocaleContext } from '../localeContext'
 import { VectorImage } from './vectorImage'
 import { Container, ImageContainer, TextContainer, Header, Text } from './style'
 
-export function PaymentComplete () {
+interface PaymentCompleteProps {
+  onClose: (reason: number) => void
+  reason: number
+}
+
+export function PaymentComplete (props: PaymentCompleteProps) {
   const locale = React.useContext(LocaleContext)
+  const TIMEOUT_SECONDS = 1
+
+  window.setTimeout(function() {
+    props.onClose(props.reason);
+  }, TIMEOUT_SECONDS * 1000)
+
   return (
     <Container>
       <ImageContainer><VectorImage /></ImageContainer>

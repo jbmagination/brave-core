@@ -3,7 +3,6 @@
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import * as React from 'react'
-import { PlusIcon } from 'brave-ui/components/icons'
 
 import { LocaleContext, LocaleData, getLocaleWithTag } from '../localeContext'
 import { FormSection } from '../formSection'
@@ -40,20 +39,6 @@ function PayWithWalletButton (props: ActionButtonProps) {
   )
 }
 
-function AddFundsButton (props: ActionButtonProps) {
-  const handleClick = () => props.onClick()
-  return (
-    <ActionPanelButton
-      text={props.locale.get('addFundsLinkText')}
-      size='medium'
-      onClick={handleClick}
-      icon={{ image: <PlusIcon />, position: 'before' }}
-      type='accent'
-      brand='rewards'
-    />
-  )
-}
-
 interface UseWalletPanelProps {
   canAddFunds: boolean
   balance: string
@@ -62,6 +47,8 @@ interface UseWalletPanelProps {
   hasSufficientFunds: boolean
   rewardsEnabled: boolean
   walletVerified: boolean
+  publisherName: string
+  publisherVerified: boolean
   onShowAddFunds: () => void
   onPayWithWallet: () => void
 }
@@ -89,10 +76,12 @@ export function UseWalletPanel (props: UseWalletPanelProps) {
           </WalletInfoPanel>
           <ActionPanel>
             {
-              props.hasSufficientFunds
-                ? <PayWithWalletButton locale={locale} onClick={props.onPayWithWallet} />
-                : props.walletVerified && props.canAddFunds
-                  ? <AddFundsButton locale={locale} onClick={props.onShowAddFunds} />
+              !props.walletVerified
+              ? <NotEnoughFunds>{locale.get('unverifiedWallet')}</NotEnoughFunds>
+              : !props.publisherVerified
+                ? <NotEnoughFunds>{props.publisherName} {locale.get('unverifiedMerchant')}</NotEnoughFunds> 
+                : props.hasSufficientFunds
+                  ? <PayWithWalletButton locale={locale} onClick={props.onPayWithWallet} />
                   : <NotEnoughFunds>{locale.get('notEnoughFunds')}</NotEnoughFunds>
             }
           </ActionPanel>

@@ -14,7 +14,6 @@ import { CreditCardDetails } from '../creditCardForm'
 interface PaymentMethodPanelProps {
   canUseCreditCard: boolean
   rewardsEnabled: boolean
-  orderDescription: string
   orderTotal: string
   orderTotalConverted: string
   hasSufficientFunds: boolean
@@ -22,6 +21,8 @@ interface PaymentMethodPanelProps {
   walletBalanceConverted: string
   walletVerified: boolean
   walletLastUpdated: string
+  publisherName: string
+  publisherVerified: boolean
   onPayWithCreditCard: (cardDetails: CreditCardDetails) => void
   onPayWithWallet: () => void
   onShowAddFunds: () => void
@@ -35,7 +36,6 @@ export function PaymentMethodPanel (props: PaymentMethodPanelProps) {
     <>
       <DialogTitle>{locale.get('paymentMethodTitle')}</DialogTitle>
       <OrderSummary
-        description={props.orderDescription}
         orderTotal={props.orderTotal}
         orderTotalConverted={props.orderTotalConverted}
       />
@@ -49,6 +49,8 @@ export function PaymentMethodPanel (props: PaymentMethodPanelProps) {
             hasSufficientFunds={props.hasSufficientFunds}
             rewardsEnabled={props.rewardsEnabled}
             walletVerified={props.walletVerified}
+            publisherName={props.publisherName}
+            publisherVerified={props.publisherVerified}
             onShowAddFunds={props.onShowAddFunds}
             onPayWithWallet={props.onPayWithWallet}
           />

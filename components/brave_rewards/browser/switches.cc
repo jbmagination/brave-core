@@ -9,6 +9,7 @@ namespace switches {
 
 // Contains all flags that we use for rewards
 const char kRewards[] = "rewards";
+const char kPaymentServiceUrl[] = "payment-service-url";
 
 }  // namespace switches
 }  // namespace brave_rewards

@@ -1,5 +1,5 @@
 diff --git a/chrome/browser/ui/BUILD.gn b/chrome/browser/ui/BUILD.gn
-index ae28f5ea7dbbdc38080f63333af538a949f44f12..90ba47d7db21e7ec1178067163ad5106e775d64d 100644
+index ae28f5ea7dbbdc38080f63333af538a949f44f12..dae9eaa5f5817abd41cc8b5b4f811ed1a025529b 100644
 --- a/chrome/browser/ui/BUILD.gn
 +++ b/chrome/browser/ui/BUILD.gn
 @@ -587,6 +587,7 @@ static_library("ui") {
@@ -28,3 +28,11 @@ index ae28f5ea7dbbdc38080f63333af538a949f44f12..90ba47d7db21e7ec1178067163ad5106
      }
    } else {  # 'OS!="win"
      # The Cast Linux build sets toolkit_views to false, but many files in this
+@@ -4214,6 +4218,7 @@ static_library("ui") {
+     deps += [
+       "//base",
+       "//base/util/timer",
++      "//brave/vendor/bat-native-ledger:headers",
+       "//chrome/browser/ui/views",
+       "//components/constrained_window",
+       "//components/content_settings/browser/ui",

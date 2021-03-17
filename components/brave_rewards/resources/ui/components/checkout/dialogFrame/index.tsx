@@ -6,6 +6,7 @@ import * as React from 'react'
 import { CloseStrokeIcon } from 'brave-ui/components/icons'
 
 import { LocaleContext } from '../localeContext'
+import { DialogCloseReason} from '../../../../checkout/lib/interfaces'
 
 import {
   MainPanel,
@@ -18,14 +19,22 @@ import {
 } from './style'
 
 export interface DialogFrameProps {
-  onClose: () => void
+  onClose: (reason: number) => void
   children: React.ReactNode
   showTitle?: boolean
   showBackground?: boolean
+  reason: DialogCloseReason
 }
 
 export function DialogFrame (props: DialogFrameProps) {
   const locale = React.useContext(LocaleContext)
+  
+  const onClose = () => {
+    console.log('Closing!!!')
+    console.log(props.reason)
+    props.onClose(props.reason)
+  }
+
   return (
     <MainPanel showBackground={props.showBackground}>
       <TopBar>
@@ -37,7 +46,7 @@ export function DialogFrame (props: DialogFrameProps) {
           </>
         }
         </TitleContainer>
-        <CloseButton onClick={props.onClose}>
+        <CloseButton onClick={onClose}>
           <CloseStrokeIcon />
         </CloseButton>
       </TopBar>

@@ -1,0 +1,25 @@
+diff --git a/components/payments/content/BUILD.gn b/components/payments/content/BUILD.gn
+index 163639ece1dc919ad1687c0f11c7f592e890bff9..869fd193480598f5b1182b72a92f823802021bb6 100644
+--- a/components/payments/content/BUILD.gn
++++ b/components/payments/content/BUILD.gn
+@@ -3,6 +3,7 @@
+ # found in the LICENSE file.
+ 
+ import("//build/config/chromeos/ui_mode.gni")
++import("//brave/components/payments/content/brave_payment_sources.gni")
+ 
+ static_library("content") {
+   sources = [
+@@ -53,9 +54,12 @@ static_library("content") {
+     "service_worker_payment_app_factory.h",
+   ]
+ 
++  sources += brave_payment_sources
++
+   deps = [
+     ":content_common",
+     ":utils",
++    "//brave/components/brave_rewards/common",
+     "//base",
+     "//build:chromeos_buildflags",
+     "//components/autofill/core/browser",
