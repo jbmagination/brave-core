@@ -1,0 +1,12 @@
+diff --git a/extensions/common/permissions/api_permission.h b/extensions/common/permissions/api_permission.h
+index 6354d5c66b254779a9a1a10816a9cf35a1df99b8..8630a5e5dca68c5cd6803136e5163c7edfbc09e1 100644
+--- a/extensions/common/permissions/api_permission.h
++++ b/extensions/common/permissions/api_permission.h
+@@ -272,6 +272,7 @@ class APIPermission {
+     kSearch = 228,
+     kTabGroups = 229,
+     kScripting = 230,
++    BRAVE_ID
+     // Last entry: Add new entries above and ensure to update the
+     // "ExtensionPermission3" enum in tools/metrics/histograms/enums.xml
+     // (by running update_extension_permission.py).
