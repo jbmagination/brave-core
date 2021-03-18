@@ -477,7 +477,7 @@ const util = {
     const cpuCount = os.cpus().length
     let jValue = cpuCount + 2
     if (config.useGoma()) {
-      const coreMultiplier = 40
+      const coreMultiplier = 3
       jValue = coreMultiplier * cpuCount
     }
 
