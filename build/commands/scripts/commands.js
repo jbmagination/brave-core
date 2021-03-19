@@ -118,6 +118,7 @@ program
   .option('--target_os <target_os>', 'target OS')
   .option('--target_apk_base <target_apk_base>', 'target Android OS apk (classic, modern, mono)', 'classic')
   .option('--is_asan', 'is asan enabled')
+  .option('--experimental_use_goma', 'whether to use Goma for building')
   .option('--universal', 'build a universal binary distribution')
   .arguments('[build_config]')
   .action(createDist)
