@@ -1,5 +1,7 @@
 source_set("permissions") {
   sources = [
+    "permission_expiration_key.cc",
+    "permission_expiration_key.h",
     "permission_expirations.cc",
     "permission_expirations.h",
     "permission_lifetime_manager.cc",
