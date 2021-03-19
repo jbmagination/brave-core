@@ -53,14 +53,15 @@ void BitflyerWallet::Generate(ledger::ResultCallback callback) {
     // that linked wallet. For bitFlyer, wallet linking is performed during
     // authorization, so bypass ClaimFunds and call promotion()->TransferTokens
     // directly.
-    ledger_->promotion()->TransferTokens([callback](const type::Result result) {
-      if (result != type::Result::LEDGER_OK) {
-        BLOG(0, "Claiming tokens failed");
-        callback(type::Result::CONTINUE);
-        return;
-      }
-      callback(type::Result::LEDGER_OK);
-    });
+    ledger_->promotion()->TransferTokens(
+        [callback](const type::Result result, std::string drain_id) {
+          if (result != type::Result::LEDGER_OK) {
+            BLOG(0, "Claiming tokens failed");
+            callback(type::Result::CONTINUE);
+            return;
+          }
+          callback(type::Result::LEDGER_OK);
+        });
     return;
   }
 
