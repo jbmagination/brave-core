@@ -338,9 +338,7 @@ source_set("browser_process") {
   }
 
   if (enable_brave_referrals) {
-    deps += [
-      "//brave/components/brave_referrals/browser",
-    ]
+    deps += [ "//brave/components/brave_referrals/browser" ]
   }
 
   if (brave_ads_enabled) {
