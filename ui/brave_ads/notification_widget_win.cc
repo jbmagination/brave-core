@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-#include "brave/ui/brave_ads/message_popup_view.h"
+#include "brave/ui/brave_ads/notification_widget.h"
 
 #include <windows.h>
 
@@ -12,9 +12,10 @@
 
 namespace brave_ads {
 
-gfx::Rect MessagePopupView::GetVisibleFrameForPrimaryDisplay() const {
+gfx::Rect NotificationWidget::GetVisibleFrameForPrimaryDisplay() const {
   RECT rect;
   SystemParametersInfo(SPI_GETWORKAREA, 0, &rect, 0);
+
   return display::Screen::GetScreen()->ScreenToDIPRectInWindow(nullptr,
                                                                gfx::Rect(rect));
 }

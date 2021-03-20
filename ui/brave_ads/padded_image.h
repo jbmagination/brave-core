@@ -1,14 +1,11 @@
-// Copyright 2013 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+/* Copyright (c) 2020 The Brave Authors. All rights reserved.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef BRAVE_UI_BRAVE_ADS_PADDED_IMAGE_H_
 #define BRAVE_UI_BRAVE_ADS_PADDED_IMAGE_H_
 
-#include <memory>
-
-#include "base/compiler_specific.h"
-#include "base/macros.h"
 #include "ui/views/controls/image_view.h"
 
 namespace brave_ads {
@@ -19,7 +16,8 @@ class PaddedImage : public views::ImageView {
   ~PaddedImage() override = default;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(PaddedImage);
+  PaddedImage(const PaddedImage&) = delete;
+  PaddedImage& operator=(const PaddedImage&) = delete;
 };
 
 }  // namespace brave_ads

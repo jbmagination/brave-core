@@ -1,6 +1,5 @@
 include_rules = [
   "+brave/app",
-  "+components/url_formatter",
   "+skia/ext",
   "+third_party/skia",
   "+ui",

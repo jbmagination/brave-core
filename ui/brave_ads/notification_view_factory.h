@@ -19,7 +19,7 @@ class Notification;
 // Creates appropriate NotificationViews for notifications depending on the
 // notification type. A notification is top level if it needs to be rendered
 // outside the browser window. No custom shadows are created for top level
-// notifications on Linux with Aura.
+// notifications on Linux with Aura
 class NotificationViewFactory {
  public:
   static NotificationView* Create(const Notification& notification);

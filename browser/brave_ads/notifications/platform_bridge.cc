@@ -17,7 +17,7 @@
 #include "brave/components/brave_ads/browser/ads_service.h"
 #include "brave/components/brave_ads/browser/ads_service_factory.h"
 #include "brave/components/brave_ads/browser/ads_service_impl.h"
-#include "brave/ui/brave_ads/message_popup_view.h"
+#include "brave/ui/brave_ads/notification_widget.h"
 #include "brave/ui/brave_ads/public/cpp/notification.h"
 
 #if defined(OS_ANDROID)
@@ -42,7 +42,7 @@ class PassThroughDelegate : public brave_ads::NotificationDelegate {
                       const brave_ads::Notification& notification)
       : profile_(profile), notification_(notification) {}
 
-  void Close(bool by_user) override {
+  void OnClose(const bool by_user) override {
     std::unique_ptr<brave_ads::AdsNotificationHandler> handler =
         std::make_unique<brave_ads::AdsNotificationHandler>(
             static_cast<content::BrowserContext*>(profile_));
@@ -52,7 +52,7 @@ class PassThroughDelegate : public brave_ads::NotificationDelegate {
                      by_user, base::OnceClosure());
   }
 
-  void Click(const base::Optional<int>& button_index,
+  void OnClick(const base::Optional<int>& button_index,
              const base::Optional<base::string16>& reply) override {
     std::unique_ptr<brave_ads::AdsNotificationHandler> handler =
         std::make_unique<brave_ads::AdsNotificationHandler>(
@@ -90,7 +90,7 @@ void PlatformBridge::Display(
       base::WrapRefCounted(new PassThroughDelegate(profile_, *notification)));
 
 #if defined(OS_WIN) || defined(OS_MAC) || defined(OS_LINUX)
-  brave_ads::MessagePopupView::Show(*notification);
+  brave_ads::NotificationWidget::Show(*notification);
 #elif defined(OS_ANDROID)
   ShowAndroidAdsNotification(profile, notification);
 #endif
@@ -139,7 +139,7 @@ void PlatformBridge::CloseAndroidAdsNotification(
 void PlatformBridge::Close(Profile* profile,
                            const std::string& notification_id) {
 #if defined(OS_WIN) || defined(OS_MAC) || defined(OS_LINUX)
-  brave_ads::MessagePopupView::ClosePopup(false);
+  brave_ads::NotificationWidget::Close(notification_id, false);
 #elif defined(OS_ANDROID)
   PlatformBridge::CloseAndroidAdsNotification(profile, notification_id);
 #endif

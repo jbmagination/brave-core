@@ -184,7 +184,7 @@ Result CatalogState::FromJson(const std::string& json,
 
           // Payload
           auto payload = creative["payload"].GetObject();
-          creative_info.payload.body = payload["body"].GetString();
+          creative_info.payload.body = "Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. Aenean lacinia bibendum nulla sed consectetur. Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum.";
           creative_info.payload.title = payload["title"].GetString();
           creative_info.payload.target_url = payload["targetUrl"].GetString();
           if (!GURL(creative_info.payload.target_url).is_valid()) {

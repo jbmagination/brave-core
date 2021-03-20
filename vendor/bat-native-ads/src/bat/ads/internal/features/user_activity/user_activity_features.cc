@@ -24,7 +24,7 @@ const double kDefaultTreshold = 2.0;
 
 const char kFieldTrialParameterIdleTimeThreshold[] = "idle_time_threshold";
 const base::TimeDelta kDefaultIdleTimeThreshold =
-    base::TimeDelta::FromSeconds(15);
+    base::TimeDelta::FromSeconds(5);
 const char kFieldTrialParameterMaximumIdleTime[] = "maximum_idle_time";
 const base::TimeDelta kDefaultMaximumIdleTime = base::TimeDelta::FromSeconds(0);
 

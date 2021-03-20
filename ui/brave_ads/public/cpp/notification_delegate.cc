@@ -40,11 +40,14 @@ void HandleNotificationClickDelegate::SetCallback(
 
 HandleNotificationClickDelegate::~HandleNotificationClickDelegate() {}
 
-void HandleNotificationClickDelegate::Click(
+void HandleNotificationClickDelegate::OnClick(
     const base::Optional<int>& button_index,
     const base::Optional<base::string16>& reply) {
-  if (!callback_.is_null())
-    callback_.Run(button_index);
+  if (callback_.is_null()) {
+    return;
+  }
+
+  callback_.Run(button_index);
 }
 
 }  // namespace brave_ads

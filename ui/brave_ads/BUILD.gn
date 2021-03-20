@@ -29,7 +29,6 @@ source_set("brave_ads") {
       "//ui/accessibility",
       "//ui/display",
       "//ui/events",
-      "//ui/events:gesture_detection",
       "//ui/gfx",
       "//ui/gfx/geometry",
       "//ui/native_theme",
@@ -44,32 +43,34 @@ source_set("brave_ads") {
     }
 
     sources = [
-      "ad_notification_view_md.cc",
-      "ad_notification_view_md.h",
-      "message_popup_view.cc",
-      "message_popup_view.h",
+      "ad_notification_view.cc",
+      "ad_notification_view.h",
       "notification_background_painter.cc",
       "notification_background_painter.h",
-      "notification_control_buttons_view.cc",
-      "notification_control_buttons_view.h",
-      "notification_header_view.cc",
-      "notification_header_view.h",
+      "notification_body_view.cc",
+      "notification_body_view.h",
+      "notification_buttons_view.cc",
+      "notification_buttons_view.h",
+      "notification_title_view.cc",
+      "notification_title_view.h",
       "notification_view.cc",
       "notification_view.h",
       "notification_view_factory.cc",
       "notification_view_factory.h",
-      "padded_button.cc",
-      "padded_button.h",
+      "notification_widget.cc",
+      "notification_widget.h",
+      "padded_image_button.cc",
+      "padded_image_button.h",
       "padded_image.cc",
       "padded_image.h",
     ]
 
     if (is_mac) {
-      sources += [ "message_popup_view_mac.mm" ]
+      sources += [ "notification_widget_mac.mm" ]
     }
 
     if (is_win) {
-      sources += [ "message_popup_view_win.cc" ]
+      sources += [ "notification_widget_win.cc" ]
     }
 
     deps += [

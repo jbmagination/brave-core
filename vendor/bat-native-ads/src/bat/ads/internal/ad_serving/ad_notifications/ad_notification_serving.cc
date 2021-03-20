@@ -132,14 +132,6 @@ void AdServing::MaybeServeAdForSegments(
       return;
     }
 
-    FrequencyCapping frequency_capping(subdivision_targeting_, ad_events);
-
-    if (!frequency_capping.IsAdAllowed()) {
-      BLOG(1, "Ad notification not served: Not allowed");
-      callback(Result::FAILED, AdNotificationInfo());
-      return;
-    }
-
     RecordAdOpportunityForSegments(segments);
 
     MaybeServeAdForParentChildSegments(segments, ad_events, callback);
@@ -162,22 +154,9 @@ void AdServing::MaybeServeAdForParentChildSegments(
   }
 
   database::table::CreativeAdNotifications database_table;
-  database_table.GetForSegments(
-      segments, [=](const Result result, const SegmentList& segments,
-                    const CreativeAdNotificationList& ads) {
-        EligibleAds eligible_ad_notifications(subdivision_targeting_);
-
-        const CreativeAdNotificationList eligible_ads =
-            eligible_ad_notifications.Get(ads, last_delivered_creative_ad_,
-                                          ad_events);
-
-        if (eligible_ads.empty()) {
-          BLOG(1, "No eligible ads found for segments");
-          MaybeServeAdForParentSegments(segments, ad_events, callback);
-          return;
-        }
-
-        MaybeServeAd(eligible_ads, callback);
+  database_table.GetAll([=](const Result result, const SegmentList& segments,
+                            const CreativeAdNotificationList& ads) {
+        MaybeServeAd(ads, callback);
       });
 }
 
@@ -242,17 +221,16 @@ void AdServing::MaybeServeAdForUntargeted(
 
 void AdServing::MaybeServeAd(const CreativeAdNotificationList& ads,
                              MaybeServeAdForSegmentsCallback callback) {
-  CreativeAdNotificationList eligible_ads = PaceAds(ads);
-  if (eligible_ads.empty()) {
-    BLOG(1, "Ad notification not served: No eligible ads found");
+  if (ads.empty()) {
+    BLOG(1, "Ad notification not served: No ads found");
     callback(Result::FAILED, AdNotificationInfo());
     return;
   }
 
-  BLOG(1, "Found " << eligible_ads.size() << " eligible ads");
+  BLOG(1, "Found " << ads.size() << " ads");
 
-  const int rand = base::RandInt(0, eligible_ads.size() - 1);
-  const CreativeAdNotificationInfo ad = eligible_ads.at(rand);
+  const int rand = base::RandInt(0, ads.size() - 1);
+  const CreativeAdNotificationInfo ad = ads.at(rand);
   MaybeDeliverAd(ad, callback);
 }
 

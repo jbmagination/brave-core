@@ -22,14 +22,14 @@ class NotificationObserver {
  public:
   // Called when the desktop notification is closed. If closed by a user
   // explicitly (as opposed to timeout/script), |by_user| should be true.
-  virtual void Close(bool by_user) {}
+  virtual void OnClose(bool by_user) {}
 
   // Called when a desktop notification is clicked. |button_index| is filled in
   // if a button was clicked (as opposed to the body of the notification) while
   // |reply| is filled in if there was an input field associated with the
   // button.
-  virtual void Click(const base::Optional<int>& button_index,
-                     const base::Optional<base::string16>& reply) {}
+  virtual void OnClick(const base::Optional<int>& button_index,
+                       const base::Optional<base::string16>& reply) {}
 };
 
 // Ref counted version of NotificationObserver, required to satisfy
@@ -70,8 +70,8 @@ class HandleNotificationClickDelegate : public NotificationDelegate {
   void SetCallback(const base::RepeatingClosure& closure);
 
   // NotificationDelegate overrides:
-  void Click(const base::Optional<int>& button_index,
-             const base::Optional<base::string16>& reply) override;
+  void OnClick(const base::Optional<int>& button_index,
+               const base::Optional<base::string16>& reply) override;
 
  protected:
   ~HandleNotificationClickDelegate() override;
@@ -79,7 +79,10 @@ class HandleNotificationClickDelegate : public NotificationDelegate {
  private:
   ButtonClickCallback callback_;
 
-  DISALLOW_COPY_AND_ASSIGN(HandleNotificationClickDelegate);
+  HandleNotificationClickDelegate(const HandleNotificationClickDelegate&)
+      = delete;
+  HandleNotificationClickDelegate& operator=(
+      const HandleNotificationClickDelegate&) = delete;
 };
 
 }  // namespace brave_ads

@@ -65,7 +65,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/chrome_paths.h"
 #if !defined(OS_ANDROID)
-#include "brave/ui/brave_ads/message_popup_view.h"
+#include "brave/ui/brave_ads/notification_widget.h"
 #include "chrome/browser/fullscreen.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
