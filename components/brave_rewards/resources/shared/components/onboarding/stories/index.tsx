@@ -64,6 +64,7 @@ storiesOf('Rewards/Onboarding', module)
       <StoryWrapper>
         <RewardsTourModal
           {...getRewardsTourProps()}
+          externalWalletProvider={'bitflyer'}
           onClose={actionLogger('onClose')}
         />
       </StoryWrapper>
@@ -74,6 +75,7 @@ storiesOf('Rewards/Onboarding', module)
       <StoryWrapper>
         <RewardsTourModal
           {...getRewardsTourProps()}
+          externalWalletProvider={'bitflyer'}
           layout='wide'
           onClose={actionLogger('onClose')}
         />
