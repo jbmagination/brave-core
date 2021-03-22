@@ -41,13 +41,27 @@ class BitflyerUtilTest : public testing::Test {
 };
 
 TEST_F(BitflyerUtilTest, GetClientId) {
-  const std::string result = bitflyer::GetClientId();
+  // production
+  ledger::_environment = type::Environment::PRODUCTION;
+  std::string result = bitflyer::GetClientId();
   ASSERT_EQ(result, BITFLYER_CLIENT_ID);
+
+  // staging
+  ledger::_environment = type::Environment::STAGING;
+  result = bitflyer::GetClientId();
+  ASSERT_EQ(result, BITFLYER_STAGING_CLIENT_ID);
 }
 
 TEST_F(BitflyerUtilTest, GetClientSecret) {
-  const std::string result = bitflyer::GetClientSecret();
+  // production
+  ledger::_environment = type::Environment::PRODUCTION;
+  std::string result = bitflyer::GetClientSecret();
   ASSERT_EQ(result, BITFLYER_CLIENT_SECRET);
+
+  // staging
+  ledger::_environment = type::Environment::STAGING;
+  result = bitflyer::GetClientSecret();
+  ASSERT_EQ(result, BITFLYER_STAGING_CLIENT_SECRET);
 }
 
 TEST_F(BitflyerUtilTest, GetFeeAddress) {
@@ -68,7 +82,7 @@ TEST_F(BitflyerUtilTest, GetAuthorizeUrl) {
   std::string result = bitflyer::GetAuthorizeUrl("rdfdsfsdfsdf");
   ASSERT_EQ(result,
             "https://bitflyer.jp/ex/OAuth/authorize"
-            "?client_id=078bf3871f3741432e813376d996a6a0"
+            "?client_id=" BITFLYER_CLIENT_ID
             "&scope=assets create_deposit_id withdraw_to_deposit_id"
             "&redirect_uri=rewards://bitflyer/authorization"
             "&state=rdfdsfsdfsdf"
@@ -79,7 +93,7 @@ TEST_F(BitflyerUtilTest, GetAuthorizeUrl) {
   result = bitflyer::GetAuthorizeUrl("rdfdsfsdfsdf");
   ASSERT_EQ(result, BITFLYER_STAGING_URL
             "/ex/OAuth/authorize"
-            "?client_id=078bf3871f3741432e813376d996a6a0"
+            "?client_id=" BITFLYER_STAGING_CLIENT_ID
             "&scope=assets create_deposit_id withdraw_to_deposit_id"
             "&redirect_uri=rewards://bitflyer/authorization"
             "&state=rdfdsfsdfsdf"
@@ -167,7 +181,7 @@ TEST_F(BitflyerUtilTest, GenerateLinks) {
   ASSERT_EQ(result->withdraw_url, "");
   ASSERT_EQ(result->verify_url, BITFLYER_STAGING_URL
             "/ex/OAuth/authorize"
-            "?client_id=078bf3871f3741432e813376d996a6a0"
+            "?client_id=" BITFLYER_STAGING_CLIENT_ID
             "&scope=assets create_deposit_id withdraw_to_deposit_id"
             "&redirect_uri=rewards://bitflyer/authorization"
             "&state=&response_type=code");
@@ -180,7 +194,7 @@ TEST_F(BitflyerUtilTest, GenerateLinks) {
   ASSERT_EQ(result->withdraw_url, "");
   ASSERT_EQ(result->verify_url, BITFLYER_STAGING_URL
             "/ex/OAuth/authorize"
-            "?client_id=078bf3871f3741432e813376d996a6a0"
+            "?client_id=" BITFLYER_STAGING_CLIENT_ID
             "&scope=assets create_deposit_id withdraw_to_deposit_id"
             "&redirect_uri=rewards://bitflyer/authorization"
             "&state=&response_type=code");
@@ -193,7 +207,7 @@ TEST_F(BitflyerUtilTest, GenerateLinks) {
   ASSERT_EQ(result->withdraw_url, BITFLYER_STAGING_URL "/ex/Home?login=1");
   ASSERT_EQ(result->verify_url, BITFLYER_STAGING_URL
             "/ex/OAuth/authorize"
-            "?client_id=078bf3871f3741432e813376d996a6a0"
+            "?client_id=" BITFLYER_STAGING_CLIENT_ID
             "&scope=assets create_deposit_id withdraw_to_deposit_id"
             "&redirect_uri=rewards://bitflyer/authorization"
             "&state=&response_type=code");
@@ -206,7 +220,7 @@ TEST_F(BitflyerUtilTest, GenerateLinks) {
   ASSERT_EQ(result->withdraw_url, "");
   ASSERT_EQ(result->verify_url, BITFLYER_STAGING_URL
             "/ex/OAuth/authorize"
-            "?client_id=078bf3871f3741432e813376d996a6a0"
+            "?client_id=" BITFLYER_STAGING_CLIENT_ID
             "&scope=assets create_deposit_id withdraw_to_deposit_id"
             "&redirect_uri=rewards://bitflyer/authorization"
             "&state=&response_type=code");
@@ -219,7 +233,7 @@ TEST_F(BitflyerUtilTest, GenerateLinks) {
   ASSERT_EQ(result->withdraw_url, "");
   ASSERT_EQ(result->verify_url, BITFLYER_STAGING_URL
             "/ex/OAuth/authorize"
-            "?client_id=078bf3871f3741432e813376d996a6a0"
+            "?client_id=" BITFLYER_STAGING_CLIENT_ID
             "&scope=assets create_deposit_id withdraw_to_deposit_id"
             "&redirect_uri=rewards://bitflyer/authorization"
             "&state=&response_type=code");
@@ -232,7 +246,7 @@ TEST_F(BitflyerUtilTest, GenerateLinks) {
   ASSERT_EQ(result->withdraw_url, "");
   ASSERT_EQ(result->verify_url, BITFLYER_STAGING_URL
             "/ex/OAuth/authorize"
-            "?client_id=078bf3871f3741432e813376d996a6a0"
+            "?client_id=" BITFLYER_STAGING_CLIENT_ID
             "&scope=assets create_deposit_id withdraw_to_deposit_id"
             "&redirect_uri=rewards://bitflyer/authorization"
             "&state=&response_type=code");

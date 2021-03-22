@@ -20,11 +20,15 @@ namespace ledger {
 namespace bitflyer {
 
 std::string GetClientId() {
-  return BITFLYER_CLIENT_ID;
+  return ledger::_environment == type::Environment::PRODUCTION
+             ? BITFLYER_CLIENT_ID
+             : BITFLYER_STAGING_CLIENT_ID;
 }
 
 std::string GetClientSecret() {
-  return BITFLYER_CLIENT_SECRET;
+  return ledger::_environment == type::Environment::PRODUCTION
+             ? BITFLYER_CLIENT_SECRET
+             : BITFLYER_STAGING_CLIENT_SECRET;
 }
 
 std::string GetUrl() {

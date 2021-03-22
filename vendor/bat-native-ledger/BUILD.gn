@@ -31,6 +31,8 @@ config("internal_config") {
   defines = [
     "BITFLYER_CLIENT_ID=\"$bitflyer_client_id\"",
     "BITFLYER_CLIENT_SECRET=\"$bitflyer_client_secret\"",
+    "BITFLYER_STAGING_CLIENT_ID=\"$bitflyer_staging_client_id\"",
+    "BITFLYER_STAGING_CLIENT_SECRET=\"$bitflyer_staging_client_secret\"",
     "BITFLYER_STAGING_URL=\"$bitflyer_staging_url\"",
   ]
   include_dirs = [
