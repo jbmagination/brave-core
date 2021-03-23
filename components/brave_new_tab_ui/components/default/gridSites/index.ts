@@ -211,12 +211,13 @@ export const Tile = styled('a')<TileProps>`
   // Menu goes behind in other Tiles when tils has z-index.
   // Give z-index while dragging to make dragging tile moves over other tiles.
   z-index: ${p => p.isDragging ? 3 : 'unset'}
-  outline: unset;
+  outline: none;
   gap: 8px;
 
   ${p => !p.isMenuShowing && css`
     &:active {
       gap: 4px;
+      outline: none;
 
       ${TileFavicon} {
         margin-top: -4px;
@@ -228,8 +229,14 @@ export const Tile = styled('a')<TileProps>`
     }
   `}
 
+  // W/o this, outline is visible after dragging.
+  &:not(:active) {
+    outline: none;
+  }
+
   &:focus-visible {
     gap: 4px;
+    outline: none;
 
     ${TileFavicon} {
       margin-top: -4px;
