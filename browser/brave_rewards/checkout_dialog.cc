@@ -1,4 +1,4 @@
-/* Copyright 2020 The Brave Authors. All rights reserved.
+/* Copyright 2021 The Brave Authors. All rights reserved.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -19,7 +19,6 @@
 #include "brave/components/brave_rewards/browser/rewards_service_impl.h"
 #include "brave/components/brave_rewards/common/constants.h"
 #include "brave/common/webui_url_constants.h"
-#include "brave/vendor/bat-native-ledger/src/bat/ledger/internal/common/time_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -27,16 +26,14 @@
 #include "components/payments/content/payment_request.h"
 #include "components/payments/core/payer_data.h"
 #include "components/web_modal/web_contents_modal_dialog_host.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/browser_task_traits.h"
 #include "third_party/blink/public/mojom/payments/payment_request.mojom.h"
 #include "ui/web_dialogs/web_dialog_delegate.h"
 
 using content::WebContents;
 using content::WebUIMessageHandler;
 using payments::PaymentRequest;
-using payments::mojom::PaymentComplete;
-using payments::mojom::PaymentItemPtr;
 using payments::mojom::PaymentErrorReason;
 
 namespace brave_rewards {
@@ -44,7 +41,6 @@ namespace brave_rewards {
 enum DialogCloseReason {
   Complete,
   InsufficientBalance,
-  MissingSKUTokens,
   UnverifiedWallet,
   UserCancelled
 };
@@ -114,11 +110,6 @@ void CheckoutDialogDelegate::OnDialogClosed(const std::string& result) {
   if (reason == DialogCloseReason::InsufficientBalance) {
     request_->TerminateConnectionWithMessage(PaymentErrorReason::NOT_SUPPORTED,
                                              errors::kInsufficientBalance);
-    return;
-  }
-  if (reason == DialogCloseReason::MissingSKUTokens) {
-    request_->TerminateConnectionWithMessage(PaymentErrorReason::NOT_SUPPORTED,
-                                             errors::kMissingSKUTokens);
     return;
   }
   return;
@@ -208,6 +199,11 @@ void CheckoutDialogHandler::HandlePaymentCompletion(
     this->ProcessSKU();
 }
 
+void PostPaymentRequestErrors(base::WeakPtr<PaymentRequest> request,
+                              PaymentErrorReason reason,
+                              std::string err) {
+  request->TerminateConnectionWithMessage(reason, err);
+}
 
 void GetPublisherDetailsCallback(
     WebContents* initiator,
@@ -252,6 +248,15 @@ void GetPublisherDetailsCallback(
 void ShowCheckoutDialog(WebContents* initiator, base::WeakPtr<PaymentRequest> request) {
   auto* context = initiator->GetBrowserContext();
   Profile* profile = Profile::FromBrowserContext(context);
+  if (profile->IsOffTheRecord()) {
+    base::PostTask(
+      FROM_HERE, {content::BrowserThread::UI},
+      base::BindOnce(&PostPaymentRequestErrors,
+                     request,
+                     PaymentErrorReason::NOT_SUPPORTED,
+                     errors::kUnavailableInPrivateMode));
+    return;
+  }
   auto *service = RewardsServiceFactory::GetForProfile(profile);
   service->StartProcess(base::DoNothing());
 

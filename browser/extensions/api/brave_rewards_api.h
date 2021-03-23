@@ -475,17 +475,6 @@ class BraveRewardsSaveOnboardingResultFunction : public ExtensionFunction {
   ResponseAction Run() override;
 };
 
-// TODO(zeparsing): Development only
-class BraveRewardsShowCheckoutDialogFunction : public ExtensionFunction {
- public:
-  DECLARE_EXTENSION_FUNCTION("braveRewards.showCheckoutDialog", UNKNOWN)
-
- protected:
-  ~BraveRewardsShowCheckoutDialogFunction() override;
-
-  ResponseAction Run() override;
-};
-
 class BraveRewardsGetPrefsFunction : public ExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("braveRewards.getPrefs", UNKNOWN)

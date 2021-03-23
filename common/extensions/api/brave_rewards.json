@@ -1232,18 +1232,7 @@
           }
         ]
      },
-     {   
-     "name": "showCheckoutDialog",
-        "type": "function",
-        "description": "Displays the rewards checkout dialog",
-        "parameters": [
-          {
-            "name": "tabID",
-            "type": "integer"
-          }
-        ]
-      },
-      {
+     {
         "name": "getPrefs",
         "type": "function",
         "description": "Gets rewards preferences for the current profile",

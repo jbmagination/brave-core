@@ -13,7 +13,6 @@
 #include "base/bind.h"
 #include "base/strings/string_number_conversions.h"
 #include "brave/browser/brave_rewards/rewards_service_factory.h"
-#include "brave/browser/brave_rewards/checkout_dialog.h"
 #include "brave/browser/brave_rewards/tip_dialog.h"
 #include "brave/browser/extensions/api/brave_action_api.h"
 #include "brave/browser/extensions/brave_component_loader.h"
@@ -1256,33 +1255,6 @@ BraveRewardsSaveOnboardingResultFunction::Run() {
     NOTREACHED();
   }
 
-  return RespondNow(NoArguments());
-}
-
-BraveRewardsShowCheckoutDialogFunction::
-~BraveRewardsShowCheckoutDialogFunction() = default;
-
-ExtensionFunction::ResponseAction
-BraveRewardsShowCheckoutDialogFunction::Run() {
-  auto params = brave_rewards::ShowCheckoutDialog::Params::Create(*args_);
-  EXTENSION_FUNCTION_VALIDATE(params.get());
-
-  Profile* profile = Profile::FromBrowserContext(browser_context());
-  content::WebContents* contents = nullptr;
-
-  if (!ExtensionTabUtil::GetTabById(
-        params->tab_id,
-        profile,
-        false,
-        nullptr,
-        nullptr,
-        &contents,
-        nullptr)) {
-    return RespondNow(Error(tabs_constants::kTabNotFoundError,
-                            base::NumberToString(params->tab_id)));
-  }
-
-  // ::brave_rewards::ShowCheckoutDialog(contents);
   return RespondNow(NoArguments());
 }
 
