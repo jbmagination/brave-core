@@ -8,6 +8,7 @@
 
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/session_storage_namespace.h"
@@ -33,6 +34,10 @@ class EphemeralStorageTabHelper
   explicit EphemeralStorageTabHelper(content::WebContents* web_contents);
   ~EphemeralStorageTabHelper() override;
 
+  const std::string& GetCurrentEphemeralTLD() const;
+  void RegisterEphemeralTLDDestroyedCallback(
+      base::OnceCallback<std::string> callback);
+
  protected:
   void ReadyToCommitNavigation(
       content::NavigationHandle* navigation_handle) override;
@@ -45,6 +50,8 @@ class EphemeralStorageTabHelper
   scoped_refptr<content::SessionStorageNamespace> local_storage_namespace_;
   scoped_refptr<content::SessionStorageNamespace> session_storage_namespace_;
   scoped_refptr<content::TLDEphemeralLifetime> tld_ephemeral_lifetime_;
+  std::vector<base::OnceCallback<std::string>>
+      ephemeral_tld_destroyed_callbacks_;
 
   WEB_CONTENTS_USER_DATA_KEY_DECL();
 };

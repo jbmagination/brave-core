@@ -44,6 +44,8 @@ class CONTENT_EXPORT TLDEphemeralLifetime
       StoragePartition* storage_partition,
       std::string storage_domain);
 
+  const TLDEphemeralLifetimeKey& key() const { return key_; }
+
  private:
   friend class RefCounted<TLDEphemeralLifetime>;
   virtual ~TLDEphemeralLifetime();
