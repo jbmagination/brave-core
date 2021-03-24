@@ -1,0 +1,51 @@
+# Copyright (c) 2021 The Brave Authors. All rights reserved.
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this file,
+# You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+import("//brave/build/config.gni")
+import("//brave/components/ipfs/buildflags/buildflags.gni")
+import("//testing/test.gni")
+
+source_set("brave_browser_ipfs_unittests") {
+  testonly = true
+  if (ipfs_enabled) {
+    sources = [
+      "//brave/browser/ipfs/test/ipfs_navigation_throttle_unittest.cc"
+    ]
+
+    deps = [
+      "//base/test:test_support",
+      "//brave/components/ipfs",
+      "//content/test:test_support",
+      "//net",
+      "//net:test_support",
+      "//testing/gtest",
+      "//url",
+    ]
+  }  # if (ipfs_enabled)
+}  # source_set("brave_browser_ipfs_unit_tests")
+
+source_set("brave_browser_ipfs_browsertests") {
+  testonly = true
+  if (ipfs_enabled) {
+    sources = [
+      "//brave/browser/ipfs/test/brave_ipfs_client_updater_browsertest.cc".
+      "//brave/browser/ipfs/test/ipfs_service_browsertest.cc".
+      "//brave/browser/ipfs/test/ipfs_not_connected_page_browsertest.cc".
+      "//brave/browser/ipfs/test/ipfs_onboarding_page_browsertest.cc".
+      "//brave/browser/ipfs/test/ipfs_navigation_throttle_browsertest.cc".
+      "//brave/browser/ipfs/test/brave_ipfs_client_updater_browsertest.cc".
+    ]
+
+    deps = [
+      "//base/test:test_support",
+      "//brave/components/ipfs",
+      "//content/test:test_support",
+      "//net",
+      "//net:test_support",
+      "//testing/gtest",
+      "//url",
+    ]
+  }  # if (ipfs_enabled)
+}  # source_set("brave_browser_ipfs_unit_tests")
