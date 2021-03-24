@@ -467,17 +467,20 @@ const util = {
     const vsVersion = vsInfo.split('\n', 3)[2].split('=', 2)[1].trim().replace(/"/g, '')
     // Path to MSBuild.exe
     let msBuild = ''
+    let toolset = ''
     if (vsVersion === '2017') {
       msBuild = path.join(vsPath, 'MSBuild', '15.0', 'Bin', 'MSBuild.exe')
+      toolset = '/p:PlatformToolset=v141'
     } else if (vsVersion === '2019') {
       msBuild = path.join(vsPath, 'MSBuild', 'Current', 'Bin', 'MSBuild.exe')
+      toolset = '/p:PlatformToolset=v142'
     } else {
       throw 'Error: unexpected version of Visual Studio: ' + vsVersion
     }
     // Build redirect-cc.sln
     const redirectCCSln = path.join(config.braveCoreDir, 'buildtools', 'win', 'redirect-cc', 'redirect-cc.sln')
     const arch = process.arch === 'x32' ? 'x86' : process.arch
-    util.run(msBuild, [redirectCCSln, '/p:Configuration=Release', '/p:Platform=' + arch, '/verbosity:quiet'])
+    util.run(msBuild, [redirectCCSln, '/p:Configuration=Release', '/p:Platform=' + arch, toolset, '/verbosity:quiet'])
   },
 
   buildTarget: (options = config.defaultOptions) => {
