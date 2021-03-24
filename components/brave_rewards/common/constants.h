@@ -16,7 +16,6 @@ extern const char kBatTransactionFailed[];
 extern const char kInvalidData[];
 extern const char kInvalidPublisher[];
 extern const char kInvalidRenderer[];
-extern const char kInvalidReturnValue[];
 extern const char kMissingSKUTokens[];
 extern const char kRewardsNotInitialized[];
 extern const char kTransactionCancelled[];

@@ -45,7 +45,7 @@ enum DialogCloseReason {
   UserCancelled
 };
 
-constexpr int kDialogMinWidth = 548;  // 490;
+constexpr int kDialogMinWidth = 548;
 constexpr int kDialogMinHeight = 200;
 
 constexpr int kDialogMaxWidth = 548;
@@ -59,8 +59,6 @@ CheckoutDialogDelegate::CheckoutDialogDelegate(base::Value params,
 CheckoutDialogDelegate::~CheckoutDialogDelegate() = default;
 
 ui::ModalType CheckoutDialogDelegate::GetDialogModalType() const {
-  // Not used, returning dummy value.
-  NOTREACHED();
   return ui::MODAL_TYPE_WINDOW;
 }
 
@@ -79,9 +77,6 @@ void CheckoutDialogDelegate::GetWebUIMessageHandlers(
 }
 
 void CheckoutDialogDelegate::GetDialogSize(gfx::Size* size) const {
-  // TODO(zenparsing): Is the constrained modal dialog
-  // really what we want? It is designed for interfaces
-  // that are fixed size for a given screen size.
 }
 
 std::string CheckoutDialogDelegate::GetDialogArgs() const {
@@ -92,27 +87,21 @@ std::string CheckoutDialogDelegate::GetDialogArgs() const {
 
 void CheckoutDialogDelegate::OnDialogClosed(const std::string& result) {
   int reason;
-  if (!base::StringToInt(result, &reason)) {
-    request_->TerminateConnectionWithMessage(PaymentErrorReason::UNKNOWN,
-                                             errors::kInvalidReturnValue);
-    return;
-  }
-  if (reason == DialogCloseReason::UserCancelled) {
-    request_->TerminateConnectionWithMessage(PaymentErrorReason::USER_CANCEL,
+  DCHECK(base::StringToInt(result, &reason));
+  switch (reason) {
+    case DialogCloseReason::UserCancelled:
+      request_->TerminateConnectionWithMessage(PaymentErrorReason::USER_CANCEL,
                                              errors::kTransactionCancelled);
-    return;
-  }
-  if (reason == DialogCloseReason::UnverifiedWallet) {
-    request_->TerminateConnectionWithMessage(PaymentErrorReason::NOT_SUPPORTED,
+      break;
+    case DialogCloseReason::UnverifiedWallet:
+      request_->TerminateConnectionWithMessage(PaymentErrorReason::NOT_SUPPORTED,
                                              errors::kUnverifiedUserWallet);
-    return;
-  }
-  if (reason == DialogCloseReason::InsufficientBalance) {
-    request_->TerminateConnectionWithMessage(PaymentErrorReason::NOT_SUPPORTED,
+      break;
+    case DialogCloseReason::InsufficientBalance:
+      request_->TerminateConnectionWithMessage(PaymentErrorReason::NOT_SUPPORTED,
                                              errors::kInsufficientBalance);
-    return;
+      break;
   }
-  return;
 }
 
 void CheckoutDialogDelegate::OnCloseContents(WebContents* source,
@@ -149,11 +138,10 @@ void CheckoutDialogHandler::OnSKUProcessed(const ledger::type::Result result, co
                                            errors::kBatTransactionFailed);
 }
 
-void CheckoutDialogHandler::ProcessSKU() {
+void CheckoutDialogHandler::HandlePaymentCompletion(
+    const base::ListValue* args) {
   auto spec = request_->spec();
-  if (!spec || spec->stringified_method_data().count(kBatPaymentMethod) < 0) {
-    request_->TerminateConnectionWithMessage(PaymentErrorReason::INVALID_DATA_FROM_RENDERER,
-                                             errors::kInvalidData);
+  if(!request_->spec()->IsInitialized()) {
     return;
   }
 
@@ -189,14 +177,6 @@ void CheckoutDialogHandler::ProcessSKU() {
   rewards_service->ProcessSKU(std::move(items_),
                               ledger::constant::kWalletUphold,
                               std::move(callback));
-}
-
-void CheckoutDialogHandler::HandlePaymentCompletion(
-    const base::ListValue* args) {
-    if(!request_->spec()->IsInitialized()) {
-      return;
-    }
-    this->ProcessSKU();
 }
 
 void PostPaymentRequestErrors(base::WeakPtr<PaymentRequest> request,

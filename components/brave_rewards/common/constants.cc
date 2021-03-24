@@ -15,7 +15,6 @@ const char kBatTransactionFailed[] = "BAT transaction failed";
 const char kInvalidData[] = "Invalid data in payment request";
 const char kInvalidPublisher[] = "Unverified publisher";
 const char kInvalidRenderer[] = "Renderer not found";
-const char kInvalidReturnValue[] = "Invalid return value";
 const char kMissingSKUTokens[] = "SKU tokens are missing";
 const char kRewardsNotInitialized[] = "Brave rewards is not initialized";
 const char kTransactionCancelled[] = "Transaction cancelled";

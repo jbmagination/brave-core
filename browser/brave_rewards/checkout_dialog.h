@@ -68,7 +68,6 @@ class CheckoutDialogHandler : public content::WebUIMessageHandler {
  private:
   void HandlePaymentCompletion(const base::ListValue* args);
   void OnSKUProcessed(const ledger::type::Result, const std::string& value);
-  void ProcessSKU();
 
   base::WeakPtr<payments::PaymentRequest> request_;
   std::vector<::ledger::mojom::SKUOrderItemPtr> items_;

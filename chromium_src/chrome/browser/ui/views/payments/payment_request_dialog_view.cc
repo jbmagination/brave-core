@@ -11,17 +11,29 @@
 
 namespace payments {
 
+namespace {
+
+bool IsBatSupportedMethod(base::WeakPtr<PaymentRequest> request) {
+  auto spec = request->spec();
+  for (const auto& data : spec->method_data()) {
+    if (data->supported_method == brave_rewards::kBatPaymentMethod) {
+      return true;
+    }
+  }
+  return false;
+}
+
+}  // namespace
+
 void PaymentRequestDialogView::CloseDialog() {
-  if (request_->spec() &&
-      request_->spec()->stringified_method_data().count(brave_rewards::kBatPaymentMethod) > 0) {
+  if (IsBatSupportedMethod(request_)) {
     return;
   }
   PaymentRequestDialogView::CloseDialog_ChromiumImpl();
 }
 
 void PaymentRequestDialogView::ShowDialog() {
-  auto spec = request_->spec();
-  if (request_->spec() && request_->spec()->stringified_method_data().count(brave_rewards::kBatPaymentMethod) > 0) {
+  if (IsBatSupportedMethod(request_)) {
     brave_rewards::ShowCheckoutDialog(request_->web_contents(), request_);
     return;
   }

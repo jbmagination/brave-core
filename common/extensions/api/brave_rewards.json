@@ -1231,8 +1231,8 @@
             "name": "result"
           }
         ]
-     },
-     {
+      },
+      {
         "name": "getPrefs",
         "type": "function",
         "description": "Gets rewards preferences for the current profile",
