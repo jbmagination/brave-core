@@ -30,7 +30,6 @@ source_set("brave_browser_ipfs_browsertests") {
   testonly = true
   if (ipfs_enabled) {
     sources = [
-      "//brave/browser/ipfs/test/brave_ipfs_client_updater_browsertest.cc".
       "//brave/browser/ipfs/test/ipfs_service_browsertest.cc".
       "//brave/browser/ipfs/test/ipfs_not_connected_page_browsertest.cc".
       "//brave/browser/ipfs/test/ipfs_onboarding_page_browsertest.cc".
@@ -48,4 +47,4 @@ source_set("brave_browser_ipfs_browsertests") {
       "//url",
     ]
   }  # if (ipfs_enabled)
-}  # source_set("brave_browser_ipfs_unit_tests")
+}  # source_set("brave_browser_ipfs_browsertests")
